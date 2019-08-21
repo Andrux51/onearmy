@@ -87,34 +87,29 @@ export class ImageInput extends React.Component<IProps, IState> {
     const { inputFiles, openLightbox, lightboxImg } = this.state
     // if at least one image present, hide the 'choose image' button and replace with smaller button
     const imgPreviewMode = inputFiles.length > 0
+
     return (
       <BoxContainer p={0}>
         <>
-          <div
-            style={{
-              display: imgPreviewMode ? 'none' : 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              height: '230px',
-              // ideally width should fill container around 300px for 4:3
-            }}
-          >
-            <Button
-              variant="light"
-              onClick={() => this.triggerFileUploaderClick()}
-              icon="image"
+          {!imgPreviewMode && (
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                height: '230px',
+                // ideally width should fill container around 300px for 4:3
+              }}
             >
-              {this.props.multi ? 'Choose Image(s)' : 'Choose Image'}
-            </Button>
-            <input
-              type="file"
-              name="pic"
-              accept="image/jpeg,image/png"
-              multiple={this.props.multi}
-              ref={this.fileInputRef}
-              style={{ display: 'none' }}
-            />
-          </div>
+              <Button
+                variant="light"
+                onClick={() => this.triggerFileUploaderClick()}
+                icon="image"
+              >
+                {this.props.multi ? 'Choose Image(s)' : 'Choose Image'}
+              </Button>
+            </div>
+          )}
           {inputFiles.map((file, index) => {
             return (
               <ImageConverter
@@ -135,9 +130,18 @@ export class ImageInput extends React.Component<IProps, IState> {
               variant="light"
               width={1}
             >
-              Choose Images
+              {this.props.multi ? 'Replace Image(s)' : 'Replace Image'}
             </Button>
           )}
+
+          <input
+            type="file"
+            name="pic"
+            accept="image/jpeg,image/png"
+            multiple={this.props.multi}
+            ref={this.fileInputRef}
+            style={{ display: 'none' }}
+          />
 
           {openLightbox && (
             <Lightbox

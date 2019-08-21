@@ -33,6 +33,10 @@ export class UserSettings extends React.Component<IProps, IState> {
     this.setState({ showNotification: true })
   }
 
+  public handleAvatarGetFailure() {
+    console.log('you have no avatar')
+  }
+
   public render() {
     const readOnly = !this.state.editMode
 
@@ -44,7 +48,11 @@ export class UserSettings extends React.Component<IProps, IState> {
               Your details
             </Heading>
             <Flex alignItems={'center'}>
-              <Avatar userName={this.state.user.userName} width="60px" />
+              <Avatar
+                userName={this.state.user.userName}
+                width="60"
+                onAvatarGetFailure={this.handleAvatarGetFailure}
+              />
               <Text inline bold ml={3}>
                 {this.state.user.userName}
               </Text>
